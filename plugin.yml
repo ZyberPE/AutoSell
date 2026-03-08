@@ -8,9 +8,10 @@ commands:
   autosell:
     description: Toggle autosell
     usage: /autosell <on|off>
+    permission: autosell.use
     aliases: [as]
 
 permissions:
   autosell.use:
-    description: Use autosell
+    description: Allows use of autosell
     default: op
