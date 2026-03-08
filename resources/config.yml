@@ -1,0 +1,16 @@
+messages:
+  usage: "§cUsage: /autosell <on|off>"
+  enabled: "§aAutoSell enabled."
+  disabled: "§cAutoSell disabled."
+  no-permission: "§cYou do not have permission."
+
+subtitle-format: "§aSold {block} for ${amount}"
+
+sell-prices:
+  stone: 1
+  cobblestone: 2
+  coal_ore: 10
+  iron_ore: 15
+  gold_ore: 25
+  diamond_ore: 100
+  emerald_ore: 150
