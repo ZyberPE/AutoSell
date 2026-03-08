@@ -13,24 +13,22 @@ use pocketmine\command\CommandSender;
 
 use pocketmine\player\Player;
 
-use pocketmine\utils\TextFormat;
-
 use onebone\economyapi\EconomyAPI;
 
 class Main extends PluginBase implements Listener {
 
     private array $enabled = [];
 
-    public function onEnable(): void {
+    public function onEnable(): void{
         $this->saveDefaultConfig();
-        $this->getServer()->getPluginManager()->registerEvents($this,$this);
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     /* -------------------------
        COMMAND
     --------------------------*/
 
-    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool{
 
         if(!$sender instanceof Player){
             return true;
@@ -72,7 +70,7 @@ class Main extends PluginBase implements Listener {
        BLOCK SELL
     --------------------------*/
 
-    public function onBreak(BlockBreakEvent $event): void {
+    public function onBreak(BlockBreakEvent $event): void{
 
         $player = $event->getPlayer();
 
@@ -81,7 +79,7 @@ class Main extends PluginBase implements Listener {
         }
 
         $block = $event->getBlock();
-        $name = strtolower($block->getName());
+        $name = strtolower(str_replace(" ", "_", $block->getName()));
 
         $prices = $this->getConfig()->get("sell-prices");
 
@@ -91,16 +89,20 @@ class Main extends PluginBase implements Listener {
 
         $price = (float)$prices[$name];
 
-        EconomyAPI::getInstance()->addMoney($player,$price);
+        // give money
+        EconomyAPI::getInstance()->addMoney($player, $price);
 
+        // remove drops
+        $event->setDrops([]);
+
+        // subtitle
         $subtitle = str_replace(
-            ["{block}","{amount}"],
-            [$block->getName(),$price],
+            ["{block}", "{amount}"],
+            [$block->getName(), $price],
             $this->getConfig()->get("subtitle-format")
         );
 
-        $player->sendTitle("",$subtitle,0,20,0);
-
-        $event->setDrops([]); // remove item drop
+        $player->sendTitle("", "");
+        $player->sendSubTitle($subtitle);
     }
 }
