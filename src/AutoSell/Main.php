@@ -79,6 +79,8 @@ class Main extends PluginBase implements Listener {
         }
 
         $block = $event->getBlock();
+
+        // convert block name to config format
         $name = strtolower(str_replace(" ", "_", $block->getName()));
 
         $prices = $this->getConfig()->get("sell-prices");
@@ -89,20 +91,21 @@ class Main extends PluginBase implements Listener {
 
         $price = (float)$prices[$name];
 
+        // prevent drops completely
+        $event->setDrops([]);
+        $event->setXpDropAmount(0);
+
         // give money
         EconomyAPI::getInstance()->addMoney($player, $price);
 
-        // remove drops
-        $event->setDrops([]);
-
-        // subtitle
+        // subtitle message
         $subtitle = str_replace(
             ["{block}", "{amount}"],
             [$block->getName(), $price],
             $this->getConfig()->get("subtitle-format")
         );
 
-        $player->sendTitle("", "");
-        $player->sendSubTitle($subtitle);
+        // send subtitle correctly for API 5
+        $player->sendTitle("", $subtitle, 5, 20, 5);
     }
 }
