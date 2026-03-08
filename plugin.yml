@@ -1,0 +1,16 @@
+name: AutoSell
+main: AutoSell\Main
+version: 1.0.0
+api: 5.0.0
+author: ZyberPE
+
+commands:
+  autosell:
+    description: Toggle autosell
+    usage: /autosell <on|off>
+    aliases: [as]
+
+permissions:
+  autosell.use:
+    description: Use autosell
+    default: op
