@@ -2,7 +2,7 @@ messages:
   usage: "§cUsage: /autosell <on|off>"
   enabled: "§aAutoSell enabled."
   disabled: "§cAutoSell disabled."
-  no-permission: "§cYou do not have permission."
+  no-permission: "§cYou do not have permission purchase a rank too have access."
 
 subtitle-format: "§aSold {block} for ${amount}"
 
